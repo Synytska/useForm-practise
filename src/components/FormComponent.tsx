@@ -1,7 +1,7 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { z } from 'zod';
+import { formSchema, Contact } from '../zod_schemas/formSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback } from 'react';
 
@@ -13,25 +13,16 @@ import { Input } from '@/components/ui/input';
 
 import { FORM_INPUT, ADD_BUTT } from '../constants/formconstants';
 
-const formSchema = z.object({
-    firstname: z.string().min(2).max(50),
-    lastname: z.string().min(2).max(50),
-    email: z.string().email(),
-    phonenumber: z.string().regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number'),
-    category: z.string().refine((val) => ['family', 'work', 'other'].includes(val), {
-        message: 'Please select a valid category'
-    })
-});
 
 export const FormComponent = () => {
     const { toast } = useToast();
 
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm<Contact>({
         resolver: zodResolver(formSchema)
     });
 
     const onSubmit = useCallback(
-        async (values: z.infer<typeof formSchema>) => {
+        async (values: Contact) => {
             try {
                 const response = await axios.post('http://localhost:3004/api/savePerson', values);
                 toast({
