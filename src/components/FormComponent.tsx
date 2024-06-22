@@ -1,9 +1,8 @@
 'use client';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import { formSchema, Contact } from '../zod_schemas/formSchema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useCallback } from 'react';
+// import { zodResolver } from '@hookform/resolvers.zod';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -13,39 +12,48 @@ import { Input } from '@/components/ui/input';
 
 import { FORM_INPUT, ADD_BUTT } from '../constants/formconstants';
 
-
 export const FormComponent = () => {
+    const router = useRouter();
     const { toast } = useToast();
 
     const form = useForm<Contact>({
-        resolver: zodResolver(formSchema)
+        // resolver: zodResolver(formSchema)
     });
 
-    const onSubmit = useCallback(
-        async (values: Contact) => {
-            try {
-                const response = await axios.post('http://localhost:3004/api/savePerson', values);
+    const onSubmit = async (data: Contact) => {
+        console.log(data);
+
+        try {
+            const response = await fetch('/api/createUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                console.log('User created successfully');
                 toast({
-                    title: 'Person saved successfully:',
-                    description: (
-                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                            <code className="text-white">{JSON.stringify(response.data, null, 2)}</code>
-                        </pre>
-                    )
+                    title: 'User created!'
                 });
-            } catch (error) {
+                router.push('/');
+            } else {
+                console.error('Failed to create user');
                 toast({
-                    title: 'Error saving person:', 
-                    description: (
-                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                            <code className="text-white">{JSON.stringify(error, null, 2)}</code>
-                        </pre>
-                    )
+                    title: 'Error',
+                    description: 'Could not creat a user'
                 });
             }
-        },
-        [toast]
-    );
+        } catch (error) {
+            console.error(error);
+            toast({
+                title: 'Error',
+                description: 'Could not creat a user'
+            });
+        }
+    };
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-1/3 mx-auto">
@@ -94,3 +102,4 @@ export const FormComponent = () => {
         </Form>
     );
 };
+
