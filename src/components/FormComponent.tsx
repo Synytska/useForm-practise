@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input';
 import { FORM_INPUT, ADD_BUTT } from '../constants/formconstants';
 import { useState } from 'react';
 
-interface IFormInput {
+export interface IFormInput {
     firstname: string;
     lastname: string;
     email: string;

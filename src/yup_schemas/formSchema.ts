@@ -1,9 +1,17 @@
 import * as yup from 'yup';
 
 export const formSchema = yup.object().shape({
-    firstname: yup.string().required('FirstName is a required field'),
-    lastname: yup.string().required('LastName is a required field'),
-    email: yup.string().required().email(),
+    firstname: yup
+        .string()
+        .max(20, 'FirstName has a maximum limit of 20 characters')
+        .matches(/^[A-Za-z]+$/, 'FirstName should contain only letters')
+        .required('FirstName is a required field'),
+    lastname: yup
+        .string()
+        .max(20, 'LastName has a maximum limit of 20 characters')
+        .matches(/^[A-Za-z]+$/, 'FirstName should contain only letters')
+        .required('LastName is a required field'),
+    email: yup.string().required().email().min(10, 'Email must be at least 10 characters'),
     phonenumber: yup
         .string()
         .required('Phone is a required field')

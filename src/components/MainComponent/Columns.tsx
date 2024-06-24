@@ -1,6 +1,6 @@
 'use client';
 import { ColumnDef } from '@tanstack/react-table';
-import { Contact } from '@/src/zod_schemas/formSchema';
+import { IFormInput } from '../FormComponent';
 import { MoreHorizontal } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -12,9 +12,8 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import axios from 'axios';
 
-export const Columns = (onDelete: (id: string) => void): ColumnDef<Contact>[] => [
+export const Columns = (onDelete: (id: string) => void): ColumnDef<IFormInput>[] => [
     {
         accessorKey: 'firstname',
         header: 'First name'
@@ -39,15 +38,6 @@ export const Columns = (onDelete: (id: string) => void): ColumnDef<Contact>[] =>
         id: 'actions',
         cell: ({ row }) => {
             const payment = row.original;
-            // const onDelete = async (id: string) => {
-            //     try {
-            //         await axios.delete(`http://localhost:3004/api/deletePerson/${id}`);
-            //         alert('Person deleted successfully');
-            //     } catch (error) {
-            //         console.error('Error deleting person:', error);
-            //         alert('Error deleting person');
-            //     }
-            // };
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -59,8 +49,8 @@ export const Columns = (onDelete: (id: string) => void): ColumnDef<Contact>[] =>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment._id)}>Edit</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => onDelete(payment._id)}>Delete</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Edit</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onDelete(payment.id)}>Delete</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             );
