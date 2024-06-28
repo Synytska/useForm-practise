@@ -4,6 +4,8 @@ import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
+import { ReloadIcon } from '@radix-ui/react-icons';
+
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
@@ -48,7 +50,7 @@ export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData
                     ) : (
                         <TableRow>
                             <TableCell colSpan={columns.length} className="h-24 text-center">
-                                No results.
+                                <ReloadIcon className="h-8 w-8 mx-auto animate-spin" />
                             </TableCell>
                         </TableRow>
                     )}

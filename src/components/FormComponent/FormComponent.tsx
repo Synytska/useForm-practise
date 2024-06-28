@@ -1,5 +1,4 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -18,12 +17,12 @@ import { FORM_INPUT, ADD_BUTT, SELECT } from '../../common/constants/formconstan
 import { ReloadIcon } from '@radix-ui/react-icons';
 
 export const FormComponent = () => {
-    const router = useRouter();
     const { toast } = useToast();
     const [isLoading, setLoading] = useState(false);
 
     const form = useForm<IFormInput>({
         resolver: yupResolver(formSchema),
+        mode: 'onChange',
         defaultValues: {
             firstname: '',
             lastname: '',
@@ -32,6 +31,12 @@ export const FormComponent = () => {
             category: '' as 'work' | 'home' | 'other'
         }
     });
+
+    const { isValid, isDirty } = form.formState;
+
+    const onClearForm = () => {
+        form.reset();
+    };
 
     const onSubmit = async (data: IFormInput) => {
         setLoading(true);
@@ -49,13 +54,14 @@ export const FormComponent = () => {
             if (response.ok) {
                 console.log('User created successfully');
                 toast({
-                    title: 'User created!'
+                    variant: 'positive',
+                    title: 'User created successfully!'
                 });
                 form.reset();
-                router.push('/');
             } else {
                 console.error('Failed to create user:', responseData);
                 toast({
+                    variant: 'destructive',
                     title: 'Error',
                     description: 'User with this number already exist'
                 });
@@ -73,7 +79,7 @@ export const FormComponent = () => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-1/3 mx-auto">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full mx-auto">
                 {FORM_INPUT.map((item) => (
                     <FormField
                         key={item.label}
@@ -104,7 +110,9 @@ export const FormComponent = () => {
                                 </FormControl>
                                 <SelectContent>
                                     {SELECT.items.map((item) => (
-                                        <SelectItem value={item}>{item}</SelectItem>
+                                        <SelectItem key={item} value={item}>
+                                            {item}
+                                        </SelectItem>
                                     ))}
                                 </SelectContent>
                             </Select>
@@ -112,13 +120,17 @@ export const FormComponent = () => {
                         </FormItem>
                     )}
                 />
-                {!isLoading ? (
-                    <Button type="submit">{ADD_BUTT}</Button>
-                ) : (
-                    <Button disabled>
-                        <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                    </Button>
-                )}
+
+                <Button className="w-1/2 mr-4" type="submit" disabled={!isValid || isLoading}>
+                    {!isLoading ? ADD_BUTT : <ReloadIcon className="mx-auto h-4 w-4 animate-spin" />}
+                </Button>
+                <Button
+                    className="w-[45%] bg-destructive hover:bg-hover"
+                    onClick={onClearForm}
+                    disabled={!isDirty}
+                >
+                    Clear
+                </Button>
             </form>
         </Form>
     );

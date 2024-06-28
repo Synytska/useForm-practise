@@ -16,11 +16,12 @@ export const formSchema = yup.object().shape({
     email: yup.string().required().email().min(10, 'Email must be at least 10 characters'),
     phonenumber: yup
         .string()
+        .min(13, 'Number must be 13 characters. Use "+" and country code')
         .required('Phone is a required field')
-        .matches(/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, 'Use "+" and country code'),
+        .matches(/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/),
     category: yup
         .string()
-        .required('Zipcode is a required field')
+        .required('Category is a required field')
         .oneOf(['work', 'home', 'other'])
         .label('Selected Category')
 });
