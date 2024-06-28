@@ -1,27 +1,45 @@
 'use client';
-import axios from 'axios';
-
 import { Columns } from './Columns';
 import { DataTable } from './DataTable';
 import { useState, useEffect } from 'react';
 
-import { Contact } from '@/src/zod_schemas/formSchema';
+import { IFormInput } from '@/src/common/interfaces/IformInput';
 
 export const ContactList = () => {
-    const [contacts, setContacts] = useState<Contact[]>([]);
+    const [contacts, setContacts] = useState<IFormInput[]>([]);
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:3004/api/contactList');
-            setContacts(response.data.data);
+            const response = await fetch('/api/showUsers', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const responseData = await response.json();
+            setContacts(responseData);
+            console.log(contacts);
         } catch (error) {
             console.error('Error fetching persons:', error);
         }
     };
 
-    const onDelete = async (id: string) => {
+    const onDelete = async (id: string | undefined) => {
         try {
-            await axios.delete(`http://localhost:3004/api/deletePerson/${id}`);
+            const response = await fetch(`/api/deleteUsers?id=${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
             alert('Person deleted successfully');
             fetchData();
         } catch (error) {

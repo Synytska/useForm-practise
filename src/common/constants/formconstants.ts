@@ -6,3 +6,10 @@ export const FORM_INPUT = [
 ] as const;
 
 export const ADD_BUTT = 'Add';
+
+export const SELECT = {
+    name: 'category',
+    label: 'Category',
+    items: ['work', 'home', 'other']
+};
+

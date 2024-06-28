@@ -1,6 +1,6 @@
 'use client';
 import { ColumnDef } from '@tanstack/react-table';
-import { IFormInput } from '../FormComponent';
+import { IFormInput } from '@/src/common/interfaces/IformInput';
 import { MoreHorizontal } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,7 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
-export const Columns = (onDelete: (id: string) => void): ColumnDef<IFormInput>[] => [
+export const Columns = (onDelete: (id: string | undefined) => void): ColumnDef<IFormInput>[] => [
     {
         accessorKey: 'firstname',
         header: 'First name'
@@ -37,7 +37,7 @@ export const Columns = (onDelete: (id: string) => void): ColumnDef<IFormInput>[]
     {
         id: 'actions',
         cell: ({ row }) => {
-            const payment = row.original;
+            const contact = row.original;
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -49,8 +49,10 @@ export const Columns = (onDelete: (id: string) => void): ColumnDef<IFormInput>[]
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Edit</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => onDelete(payment.id)}>Delete</DropdownMenuItem>
+                        {/* <DropdownMenuItem onClick={() => navigator.clipboard.writeText(contact.id)}>
+                            Edit
+                        </DropdownMenuItem> */}
+                        <DropdownMenuItem onClick={() => onDelete(contact.id)}>Delete</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             );

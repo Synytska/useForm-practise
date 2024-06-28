@@ -1,33 +1,26 @@
 'use client';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-// import {  Contact } from '../zod_schemas/formSchema';
-import { formSchema } from '../yup_schemas/formSchema';
+
+import { formSchema } from '../../yup_schemas/formSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-// import { zodResolver } from '@hookform/resolvers.zod';
-import { useRouter } from 'next/navigation';
-import { ReloadIcon } from "@radix-ui/react-icons"
-
-import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
-import { FORM_INPUT, ADD_BUTT } from '../constants/formconstants';
-import { useState } from 'react';
+import { IFormInput } from '../../common/interfaces/IformInput';
+import { FORM_INPUT, ADD_BUTT, SELECT } from '../../common/constants/formconstants';
 
-export interface IFormInput {
-    firstname: string;
-    lastname: string;
-    email: string;
-    phonenumber: string;
-    category: 'work' | 'home' | 'other';
-}
+import { ReloadIcon } from '@radix-ui/react-icons';
+
 export const FormComponent = () => {
     const router = useRouter();
     const { toast } = useToast();
-    const [isLoading, setLoading] = useState(false)
+    const [isLoading, setLoading] = useState(false);
 
     const form = useForm<IFormInput>({
         resolver: yupResolver(formSchema),
@@ -58,7 +51,6 @@ export const FormComponent = () => {
                 toast({
                     title: 'User created!'
                 });
-                setLoading(false)
                 form.reset();
                 router.push('/');
             } else {
@@ -74,6 +66,8 @@ export const FormComponent = () => {
                 title: 'Error',
                 description: 'Unexpected error occurred'
             });
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -96,13 +90,12 @@ export const FormComponent = () => {
                         )}
                     />
                 ))}
-
                 <FormField
                     control={form.control}
                     name="category"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Category</FormLabel>
+                            <FormLabel>{SELECT.label}</FormLabel>
                             <Select onValueChange={field.onChange}>
                                 <FormControl>
                                     <SelectTrigger>
@@ -110,9 +103,9 @@ export const FormComponent = () => {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="work">work</SelectItem>
-                                    <SelectItem value="home">home</SelectItem>
-                                    <SelectItem value="other">other</SelectItem>
+                                    {SELECT.items.map((item) => (
+                                        <SelectItem value={item}>{item}</SelectItem>
+                                    ))}
                                 </SelectContent>
                             </Select>
                             <FormMessage />

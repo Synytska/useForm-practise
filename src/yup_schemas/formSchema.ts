@@ -1,6 +1,8 @@
 import * as yup from 'yup';
 
 export const formSchema = yup.object().shape({
+    id: yup
+    .string(),
     firstname: yup
         .string()
         .max(20, 'FirstName has a maximum limit of 20 characters')
@@ -22,3 +24,4 @@ export const formSchema = yup.object().shape({
         .oneOf(['work', 'home', 'other'])
         .label('Selected Category')
 });
+
