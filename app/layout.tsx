@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { BaseLayout } from '@/src/components/BaseLayout';
+import { BaseLayout } from '@/src/common/components/BaseLayout';
 
 import './globals.css';
 

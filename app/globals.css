@@ -21,10 +21,12 @@
 
         --muted: 60 4.8% 95.9%;
         --muted-foreground: 25 5.3% 44.7%;
-        --hover: 0 84% 60% 0.46%;
+        --hover: 0 84% 60% / 46%;
 
         --accent: 60 4.8% 95.9%;
         --accent-foreground: 24 9.8% 10%;
+
+        --positive: 147 61% 89%;
 
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 60 9.1% 97.8%;
@@ -74,4 +76,16 @@
     body {
         @apply bg-background text-foreground;
     }
+}
+
+@layer utilities {
+  .bg-hover {
+      background-color: hsl(var(--hover));
+  }
+  .hover\:bg-hover:hover {
+      background-color: hsl(var(--hover));
+  }
+  .bg-positive{
+    background-color: hsl(var(--positive));
+  }
 }

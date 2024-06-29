@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 
 import { useToast } from '@/components/ui/use-toast';
 
+import { ModeToggle } from './ModeTogle';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { IFormInput } from '@/src/common/interfaces/IformInput';
@@ -54,8 +55,8 @@ export const ContactList = () => {
         } catch (error) {
             console.error('Error deleting person:', error);
             toast({
-                variant: "destructive",
-                title: "Uh oh! Something went wrong. Try again later!",
+                variant: 'destructive',
+                title: 'Uh oh! Something went wrong. Try again later!'
             });
         }
     };
@@ -68,18 +69,19 @@ export const ContactList = () => {
         <div>
             <div className="bg-black w-full flex justify-between px-12 py-4 text-center items-center">
                 <h1 className="text-[#f0f8ff] text-2xl">Contact Book</h1>
+                <div className='flex gap-4'>
                 <Dialog>
                     <DialogTrigger asChild>
                         <Button variant="outline">Create</Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogTitle>Create New Contact</DialogTitle>
-                        <DialogDescription>
-                            Create new contact here. Click add when you're done.
-                        </DialogDescription>
+                        <DialogDescription>Create new contact here. Click add when you're done.</DialogDescription>
                         <FormComponent />
                     </DialogContent>
                 </Dialog>
+                <ModeToggle />
+                </div>
             </div>
 
             <div className="container mx-auto py-10">
