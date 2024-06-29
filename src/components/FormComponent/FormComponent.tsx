@@ -122,7 +122,7 @@ export const FormComponent = () => {
                 />
 
                 <Button className="w-1/2 mr-4" type="submit" disabled={!isValid || isLoading}>
-                    {!isLoading ? ADD_BUTT : <ReloadIcon className="mx-auto h-4 w-4 animate-spin" />}
+                    {!isLoading || isValid ? ADD_BUTT : <ReloadIcon className="mx-auto h-4 w-4 animate-spin" />}
                 </Button>
                 <Button
                     className="w-[45%] bg-destructive hover:bg-hover"
