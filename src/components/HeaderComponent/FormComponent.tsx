@@ -12,7 +12,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 import { IFormInput } from '../../common/interfaces/IformInput';
-import { FORM_INPUT, ADD_BUTT, SELECT } from '../../common/constants/formconstants';
+import { FORM_INPUT, ADD_BUTT, SELECT } from './constants/formconstants';
+import { SUBMIT, CLEAR } from '@/src/common/constants/common_const';
 
 import { ReloadIcon } from '@radix-ui/react-icons';
 
@@ -105,7 +106,7 @@ export const FormComponent = () => {
                             <Select onValueChange={field.onChange}>
                                 <FormControl>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Select a category to display" />
+                                        <SelectValue placeholder={SELECT.placeholder} />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
@@ -121,18 +122,13 @@ export const FormComponent = () => {
                     )}
                 />
 
-                <Button className="w-1/2 mr-4" type="submit" disabled={!isValid || isLoading}>
+                <Button className="w-1/2 mr-4" type={SUBMIT} disabled={!isValid || isLoading}>
                     {!isLoading || isValid ? ADD_BUTT : <ReloadIcon className="mx-auto h-4 w-4 animate-spin" />}
                 </Button>
-                <Button
-                    className="w-[45%] bg-destructive hover:bg-hover"
-                    onClick={onClearForm}
-                    disabled={!isDirty}
-                >
-                    Clear
+                <Button className="w-[45%] bg-destructive hover:bg-hover" onClick={onClearForm} disabled={!isDirty}>
+                    {CLEAR}
                 </Button>
             </form>
         </Form>
     );
 };
-

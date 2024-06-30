@@ -1,5 +1,4 @@
-// import { FormComponent } from '@/src/components/FormComponent/FormComponent';
-import { ContactList } from '@/src/components/MainComponent/ContactList';
+import { ContactList } from '@/src/components/ContactList';
 
 export default function Home() {
     return (
@@ -8,4 +7,3 @@ export default function Home() {
         </main>
     );
 }
-

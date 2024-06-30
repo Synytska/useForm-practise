@@ -24,6 +24,8 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
+import { HIDE_COLS, PREVIOUS, NEXT } from './constants/data_table';
+
 import { ReloadIcon } from '@radix-ui/react-icons';
 
 interface DataTableProps<TData, TValue> {
@@ -65,7 +67,7 @@ export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
-                           Hide Columns
+                            {HIDE_COLS}
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
@@ -132,13 +134,12 @@ export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
-                    Previous
+                    {PREVIOUS}
                 </Button>
                 <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-                    Next
+                    {NEXT}
                 </Button>
             </div>
         </div>
     );
 };
-
