@@ -1,1 +1,0 @@
-export const toggleSort = (column: any) => () => column.toggleSorting(column.getIsSorted() === 'asc')

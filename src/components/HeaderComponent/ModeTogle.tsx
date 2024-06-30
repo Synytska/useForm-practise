@@ -27,7 +27,7 @@ export function ModeToggle() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 {MODE_TOGGLE.map((item) => (
-                    <DropdownMenuItem onClick={() => setTheme(item.set)}>{item.text}</DropdownMenuItem>
+                    <DropdownMenuItem key={item.set} onClick={() => setTheme(item.set)}>{item.text}</DropdownMenuItem>
                 ))}
             </DropdownMenuContent>
         </DropdownMenu>

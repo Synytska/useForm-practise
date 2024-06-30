@@ -12,4 +12,3 @@ export const BaseLayout: FC<PropsWithChildren> = ({ children }) => (
         </ThemeProvider>
     </div>
 );
-

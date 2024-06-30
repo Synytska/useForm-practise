@@ -99,7 +99,7 @@ export const FormComponent = () => {
                 ))}
                 <FormField
                     control={form.control}
-                    name="category"
+                    name={SELECT.name}
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>{SELECT.label}</FormLabel>

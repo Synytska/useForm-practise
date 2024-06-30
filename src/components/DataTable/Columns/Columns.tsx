@@ -6,40 +6,41 @@ import { SortButton } from './SortButton';
 import { DropDown } from './DropDown';
 
 import { FIRST_NAME, LAST_NAME, PH_NUMBER, EMAIL, CATEGORY } from '@/src/common/constants/common_const';
-import { ACTIONS, DELETE, OPEN } from '../constants/data_table';
+import { ACTIONS, DELETE, OPEN, ACTIONS_SML } from '../constants/data_table';
 
 export const Columns = (onDelete: (id: string | undefined) => void): ColumnDef<IFormInput>[] => [
     {
-        accessorKey: 'firstname',
+        accessorKey: FIRST_NAME.sml,
         header: ({ column }) => {
-            return <SortButton column={column} text={FIRST_NAME} />;
+            return <SortButton column={column} text={FIRST_NAME.bgl} />;
         }
     },
     {
-        accessorKey: 'lastname',
+        accessorKey: LAST_NAME.sml,
         header: ({ column }) => {
-            return <SortButton column={column} text={LAST_NAME} />;
+            return <SortButton column={column} text={LAST_NAME.bgl} />;
         }
     },
     {
-        accessorKey: 'email',
-        header: EMAIL
+        accessorKey: EMAIL.sml,
+        header: () => <div className="pl-4">{EMAIL.bgl}</div>
     },
     {
-        accessorKey: 'phonenumber',
-        header: PH_NUMBER
+        accessorKey: PH_NUMBER.sml,
+        header: () => <div className="pl-4">{PH_NUMBER.bgl}</div>
     },
     {
-        accessorKey: 'category',
+        accessorKey: CATEGORY.sml,
         header: ({ column }) => {
-            return <SortButton column={column} text={CATEGORY} />;
+            return <SortButton column={column} text={CATEGORY.bgl} />;
         }
     },
     {
-        id: 'actions',
+        id: ACTIONS_SML,
         cell: ({ row }) => {
             const contact = row.original;
             return <DropDown open={OPEN} label={ACTIONS} action={() => onDelete(contact.id)} action_text={DELETE} />;
         }
     }
 ];
+

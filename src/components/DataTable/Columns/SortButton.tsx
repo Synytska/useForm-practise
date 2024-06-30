@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 import { IFormInput } from '@/src/common/interfaces/IformInput';
 
-import { toggleSort } from '@/src/common/actions/actions';
+import { toggleSort } from '@/lib/utils';
 
 import { ArrowUpDown } from 'lucide-react';
 
