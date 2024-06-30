@@ -18,6 +18,6 @@ model Person {
   firstname    String
   lastname     String
   email        String    @unique
-  phonenumber  String
+  phonenumber  String    @unique
   category     Category
 }

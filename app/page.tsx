@@ -1,11 +1,9 @@
-import { FormComponent } from '@/src/components/FormComponent';
-import { ContactList } from '@/src/components/MainComponent/ContactList';
-import { Test } from '@/src/components/Test';
+import { ContactList } from '@/src/components/ContactList';
+
 export default function Home() {
     return (
-        <main className="my-12">
-            <FormComponent />
+        <main className="mb-12">
+            <ContactList />
         </main>
     );
 }
-
